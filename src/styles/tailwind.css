@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "./theme.css";
+@import "./fonts.css";
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdfbf8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8b9a8d;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7a8a7c;
+}
