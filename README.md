@@ -153,15 +153,6 @@ A modern, responsive web application for personalized skincare analysis and reco
 ✅ Accessibility features  
 ✅ Smooth animations & transitions  
 
-## Frontend-Only Implementation
-
-This is a **frontend-only** application with:
-- Mock data for demonstrations
-- Simulated AI analysis (3-second delay)
-- Local state management
-- No backend API calls
-- Privacy-focused (no data storage)
-
 ## Design Principles
 
 1. **Minimal & Professional**: Clean layouts with purposeful white space
@@ -179,17 +170,4 @@ This is a **frontend-only** application with:
 - `LoadingSpinner` - Loading state component
 - UI components from Radix UI (Button, Card, Input, etc.)
 
-## Notes
-
-- All analysis results are simulated (frontend only)
-- Images are not stored or processed on any server
-- This is a demonstration/educational project
-- For production use, integrate with actual AI APIs and backend
-
-## Disclaimer
-
-This application is for educational and demonstration purposes only. The AI recommendations are simulated and should not be used as medical advice. Always consult a licensed dermatologist for professional skincare guidance.
-
----
-
-**Built with ❤️ using modern web technologies**
+**UNDER PROGRESS**
