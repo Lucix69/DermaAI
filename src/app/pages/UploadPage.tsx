@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import { Upload, Image as ImageIcon, X, Loader2, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+import { Upload, Image as ImageIcon, X, Loader2, CheckCircle2, AlertCircle, Sparkles, Camera } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
@@ -11,6 +11,7 @@ export function UploadPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -142,8 +143,7 @@ export function UploadPage() {
                   <div
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
-                    className="border-2 border-dashed border-border rounded-2xl p-8 text-center space-y-4 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer"
-                    onClick={() => fileInputRef.current?.click()}
+                    className="border-2 border-dashed border-border rounded-2xl p-8 text-center space-y-4 hover:border-primary/50 hover:bg-primary/5 transition-all"
                   >
                     <div className="flex justify-center">
                       <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#8b9a8d] to-[#a8c4a8] flex items-center justify-center">
@@ -153,12 +153,18 @@ export function UploadPage() {
                     <div>
                       <h3 className="mb-2">Drag & Drop Your Photo Here</h3>
                       <p className="text-sm text-muted-foreground mb-4">
-                        or click to browse from your device
+                        or choose an option below
                       </p>
-                      <Button variant="outline" type="button">
-                        <ImageIcon className="w-4 h-4 mr-2" />
-                        Choose File
-                      </Button>
+                      <div className="flex flex-col sm:flex-row justify-center gap-3">
+                        <Button variant="outline" type="button" onClick={() => fileInputRef.current?.click()}>
+                          <ImageIcon className="w-4 h-4 mr-2" />
+                          Upload from Files
+                        </Button>
+                        <Button variant="outline" type="button" onClick={() => cameraInputRef.current?.click()}>
+                          <Camera className="w-4 h-4 mr-2" />
+                          Open Camera
+                        </Button>
+                      </div>
                     </div>
                     <p className="text-xs text-muted-foreground">
                       Supported formats: JPG, PNG • Max size: 10MB
@@ -189,7 +195,15 @@ export function UploadPage() {
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/jpeg,image/jpg,image/png"
+                  accept="image/jpeg,image/jpg,image/png,image/webp"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                />
+                <input
+                  ref={cameraInputRef}
+                  type="file"
+                  accept="image/jpeg,image/jpg,image/png,image/webp"
+                  capture="user"
                   onChange={handleFileSelect}
                   className="hidden"
                 />

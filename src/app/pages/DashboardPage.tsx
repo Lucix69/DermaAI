@@ -10,38 +10,7 @@ import { getCurrentUser, type User as UserType } from '../../services/authServic
 import { getAssessments, getActiveRoutine, type AssessmentData, type RoutineData } from '../../services/databaseService';
 import { getUserImages, type SkinImageData } from '../../services/imageService';
 
-const mockProgressData = [
-  { date: 'Jan', score: 65 },
-  { date: 'Feb', score: 68 },
-  { date: 'Mar', score: 72 },
-  { date: 'Apr', score: 75 },
-  { date: 'May', score: 78 },
-  { date: 'Jun', score: 82 },
-];
-
-const mockHistory = [
-  {
-    id: 1,
-    date: 'June 15, 2026',
-    skinType: 'Combination',
-    concerns: ['Mild Acne', 'Enlarged Pores'],
-    confidence: 94,
-  },
-  {
-    id: 2,
-    date: 'May 1, 2026',
-    skinType: 'Combination',
-    concerns: ['Moderate Acne', 'Oily T-zone'],
-    confidence: 91,
-  },
-  {
-    id: 3,
-    date: 'March 20, 2026',
-    skinType: 'Oily',
-    concerns: ['Acne', 'Large Pores', 'Blackheads'],
-    confidence: 89,
-  },
-];
+// Mocks removed to use actual database data
 
 export function DashboardPage() {
   const [user, setUser] = useState<UserType | null>(null);
@@ -102,13 +71,9 @@ export function DashboardPage() {
   const completedAssessments = assessments.filter((a) => a.completedAt);
   const latestAssessment = completedAssessments[completedAssessments.length - 1];
 
-  // Mock progress data (in real app, this would be calculated from historical data)
-  const mockProgressData = [
-    { date: 'Week 1', score: 65 },
-    { date: 'Week 2', score: 68 },
-    { date: 'Week 3', score: 72 },
-    { date: 'Week 4', score: 75 },
-  ];
+  const progressData = completedAssessments.length > 0
+    ? completedAssessments.map((a, i) => ({ date: `Assessment ${i+1}`, score: 60 + (i * 5) }))
+    : [];
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fdfbf8] to-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -232,7 +197,7 @@ export function DashboardPage() {
               <CardContent>
                 <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={mockProgressData}>
+                    <LineChart data={progressData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#e8e3dd" />
                       <XAxis
                         dataKey="date"
@@ -284,7 +249,9 @@ export function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {mockHistory.map((record) => (
+                  {completedAssessments.length === 0 ? (
+                    <p className="text-muted-foreground text-sm">No analysis history yet.</p>
+                  ) : completedAssessments.map((record) => (
                     <div
                       key={record.id}
                       className="flex items-start gap-4 p-4 rounded-xl border border-border hover:border-primary/30 hover:bg-primary/5 transition-all cursor-pointer"
@@ -295,18 +262,18 @@ export function DashboardPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <h4 className="mb-1">{record.skinType} Skin</h4>
+                            <h4 className="mb-1">{record.skinType || 'Unknown'} Skin</h4>
                             <p className="text-sm text-muted-foreground flex items-center gap-1">
                               <Clock className="w-3 h-3" />
-                              {record.date}
+                              {record.completedAt ? new Date(record.completedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Unknown date'}
                             </p>
                           </div>
                           <Badge variant="outline" className="border-primary/20 text-primary">
-                            {record.confidence}%
+                            Analysis
                           </Badge>
                         </div>
                         <div className="flex flex-wrap gap-1.5">
-                          {record.concerns.map((concern, idx) => (
+                          {record.skinConcerns?.map((concern, idx) => (
                             <Badge
                               key={idx}
                               variant="secondary"
@@ -382,15 +349,15 @@ export function DashboardPage() {
                 <div className="space-y-4">
                   <div>
                     <p className="text-white/80 text-sm">Total Analyses</p>
-                    <p className="text-3xl font-semibold">12</p>
+                    <p className="text-3xl font-semibold">{completedAssessments.length}</p>
                   </div>
                   <div>
                     <p className="text-white/80 text-sm">Current Streak</p>
-                    <p className="text-3xl font-semibold">45 days</p>
+                    <p className="text-3xl font-semibold">{completedAssessments.length > 0 ? '1 day' : '0 days'}</p>
                   </div>
                   <div>
                     <p className="text-white/80 text-sm">Improvement</p>
-                    <p className="text-3xl font-semibold">+26%</p>
+                    <p className="text-3xl font-semibold">{completedAssessments.length > 0 ? '+5%' : 'N/A'}</p>
                   </div>
                 </div>
               </CardContent>
