@@ -3,12 +3,15 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ChatAssistant } from './components/ChatAssistant';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { AdminRoute } from './components/AdminRoute';
 import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
 import { AssessmentPage } from './pages/AssessmentPage';
 import { UploadPage } from './pages/UploadPage';
 import { ResultsPage } from './pages/ResultsPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { RemindersPage } from './pages/RemindersPage';
+import { MonitoringPage } from './pages/MonitoringPage';
 import { Toaster } from './components/ui/sonner';
 
 export default function App() {
@@ -58,6 +61,22 @@ export default function App() {
                         <ProtectedRoute>
                           <DashboardPage />
                         </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reminders"
+                      element={
+                        <ProtectedRoute>
+                          <RemindersPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/monitoring"
+                      element={
+                        <AdminRoute>
+                          <MonitoringPage />
+                        </AdminRoute>
                       }
                     />
                   </Routes>

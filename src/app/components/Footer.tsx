@@ -76,23 +76,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h4 className="mb-4">Contact</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2">
-                <Mail className="w-4 h-4 mt-0.5 text-primary" />
-                <span className="text-sm text-muted-foreground">support@dermaai.com</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Phone className="w-4 h-4 mt-0.5 text-primary" />
-                <span className="text-sm text-muted-foreground">+1 (555) 123-4567</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5 text-primary" />
-                <span className="text-sm text-muted-foreground">
-                  123 Health St, Suite 100<br />
-                  San Francisco, CA 94103
-                </span>
-              </li>
-            </ul>
+            <p className="text-sm text-muted-foreground italic">To be added</p>
           </div>
         </div>
 

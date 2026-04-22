@@ -9,6 +9,7 @@ export function Navbar() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [userName, setUserName] = useState("");
 
   const location = useLocation();
@@ -23,6 +24,9 @@ export function Navbar() {
       if (authenticated) {
         const user = getCurrentUser();
         setUserName(user?.name || "");
+        setIsAdmin(user?.email === 'adityamukherjee1972@gmail.com');
+      } else {
+        setIsAdmin(false);
       }
     };
 
@@ -39,6 +43,7 @@ export function Navbar() {
   const handleLogout = () => {
     signOut();
     setIsAuth(false);
+    setIsAdmin(false);
     setUserName("");
     toast.success("Logged out successfully");
     navigate("/");
@@ -105,6 +110,26 @@ export function Navbar() {
             >
               Dashboard
             </Link>
+
+            <Link
+              to="/reminders"
+              className={`transition-colors ${
+                isActive("/reminders") ? "text-primary" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Reminders
+            </Link>
+
+            {isAdmin && (
+              <Link
+                to="/monitoring"
+                className={`transition-colors ${
+                  isActive("/monitoring") ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Monitoring
+              </Link>
+            )}
 
           </div>
 
@@ -200,6 +225,23 @@ export function Navbar() {
             Dashboard
           </Link>
 
+          <Link
+            to="/reminders"
+            className="block px-4 py-2 text-muted-foreground hover:text-foreground"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Reminders
+          </Link>
+
+          {isAdmin && (
+            <Link
+              to="/monitoring"
+              className="block px-4 py-2 text-muted-foreground hover:text-foreground"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Monitoring
+            </Link>
+          )}
 
           <div className="px-4 pt-3 space-y-2">
 
