@@ -94,7 +94,3 @@ pnpm run dev
 Your frontend should now be running on `http://localhost:5173` and connected to your local backend API!
 
 ---
-
-<div align="center">
-  <p>Built with ❤️ for healthier skin.</p>
-</div>
