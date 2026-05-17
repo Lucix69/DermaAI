@@ -126,7 +126,7 @@ app.get("/api/questionnaire", authenticateToken, async (req: AuthRequest, res) =
     });
     
     // Parse the JSON data before sending
-    const formatted = questionnaires.map(q => ({
+    const formatted = questionnaires.map((q: any) => ({
       ...q,
       data: JSON.parse(q.data)
     }));
